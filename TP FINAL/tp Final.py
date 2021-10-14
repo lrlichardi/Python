@@ -8,9 +8,9 @@
 # 7) Marcar un auto como reservado por ID.
 # 8) Mostrar el listado de todos los IDs y modelos que hayan sido marcados como reservados.
 # 9) Terminar.
-
+from operator import itemgetter
 print('Consecionario Multimarca!')
-listado_de_autos={1 : {'Marca': 'vw', 'Modelo': 'vento', 'Año': '2015', 'Precio': 1000, 'Reservado': False}}
+listado_de_autos={}
 auto = {}
 salir = False
 
@@ -20,11 +20,13 @@ def mostrar_auto(id , dic):
         print(x,':',y)
 
 def mostrar_todos(dic):
-    for x,y in dic.items():
+    dic_new = dict(sorted(dic.items() , key = lambda id: id[0]))
+    for x,y in dic_new.items():
         print(f'ID:{x} - Marca/Modelo:', y['Marca'] , y['Modelo'] )
 
 def mostrar_precios(dic):
-    for x,y in dic.items():
+    dic_new = dict(sorted(dic.items() , key = lambda s: s[1]['Precio'] ))
+    for x,y in dic_new.items():
         print(f'ID:{x} - Marca/Modelo:', y['Marca'] , y['Modelo'] , f'(${y.get("Precio")})' )
 
 def mostrar_reservados(dic):
@@ -34,9 +36,17 @@ def mostrar_reservados(dic):
 
 def mostrar_completo(dic , id):
     for x,y in dic[id].items():
-        print(x,':' , y )
+        print(x,':',y)
 
-print('1)Agregar un nuevo auto al inventario' , '2)Eliminar un auto del inventario por ID.' ,'3)Mostrar un auto del inventario por ID.', '4)Mostrar el listado de todos los IDs y la marca/modelo del auto que corresponde a ese ID' , '5)Mostrar el listado de todos los IDs y el modelo y precio ordenado en orden creciente.','6)Informe total autos cargados en el inventario.','7)Marcar un auto como reservado por ID' , '8)Mostrar el listado de todos los IDs y modelos que hayan sido marcados como reservados.' , '9)terminar' , sep='\n'  )
+print('''1)Agregar un nuevo auto al inventario
+        2)Eliminar un auto del inventario por ID.
+        3)Mostrar un auto del inventario por ID.
+        4)Mostrar el listado de todos los IDs y la marca/modelo del auto que corresponde a ese ID
+        5)Mostrar el listado de todos los IDs y el modelo y precio.
+        6)Informe total autos cargados en el inventario.
+        7)Marcar un auto como reservado por ID
+        8)Mostrar el listado de todos los IDs y modelos que hayan sido marcados como reservados.
+        9)terminar''')
 
 while salir == False:
     num = int(input('Ingrese una opcion: '))
